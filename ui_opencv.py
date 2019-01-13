@@ -12,9 +12,9 @@ MAX_HEIGHT = 900
 RED = (0, 0, 255)
 GREEN = (0, 255, 0)
 BLUE = (255, 0, 0)
-PATH_INPUT = './decensor_input'
-PATH_INPUT_ORIGINAL = './decensor_input_original'
-PATH_OUTPUT = './decensor_output'
+PATH_INPUT = 'decensor_input'
+PATH_INPUT_ORIGINAL = 'decensor_input_original'
+PATH_OUTPUT = 'decensor_output'
 
 TIP = '''
 r=開啟檔案
@@ -193,9 +193,9 @@ def output(mode):
     execute = 'decensor.py' if os.path.exists(os.path.join(workdir, 'decensor.py')) else 'decensor.exe'
     command = [
         execute,
-        '--decensor_input_path=%s' % path_input,
-        '--decensor_input_original_path=%s' % path_input_original,
-        '--decensor_output_path=%s' % path_output,
+        #'--decensor_input_path=%s' % PATH_INPUT,
+        #'--decensor_input_original_path=%s' % PATH_INPUT_ORIGINAL,
+        #'--decensor_output_path=%s' % PATH_OUTPUT,
     ]
     if mode == 'bleak':
         print('===== 處理中 (去除海苔條) =====')
