@@ -5,7 +5,7 @@
 
 ## 二進制檔案
 直接使用打包好的檔案 (不需要安裝 python 但開啟慢)  
-https://drive.google.com/open?id=1SBEGFXjRT7seN6CxUchX4dY9FLYql80x at 2019/1/13
+https://drive.google.com/open?id=1jiDLgUhBeHDFauPPSgfVuCoGqV88ceNl at 2019/1/13
 
 需要更快的開啟速度或是再開發請繼續閱讀下方`安裝`部分
 

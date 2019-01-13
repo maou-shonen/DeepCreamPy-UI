@@ -3,6 +3,7 @@ import sys
 import cv2
 import math
 import shutil
+import subprocess
 import numpy as np
 
 
@@ -190,9 +191,7 @@ def output(mode):
     cv2.imwrite(os.path.join(path_input, 'tmp.png'), image.last)
     cv2.imwrite(os.path.join(path_input_original, 'tmp.png'), image.first)
 
-    execute = 'decensor.py' if os.path.exists(os.path.join(workdir, 'decensor.py')) else 'decensor.exe'
-    command = [
-        execute,
+    args = [
         #'--decensor_input_path=%s' % PATH_INPUT,
         #'--decensor_input_original_path=%s' % PATH_INPUT_ORIGINAL,
         #'--decensor_output_path=%s' % PATH_OUTPUT,
@@ -201,10 +200,27 @@ def output(mode):
         print('===== 處理中 (去除海苔條) =====')
     elif mode == 'mosaic':
         print('===== 處理中 (去除馬賽克) =====')
-        command.append('--is_mosaic=True')
-    import subprocess
-    stdout = subprocess.check_output(' '.join(command), shell=True, cwd=workdir)
-    print(stdout)
+        args.append('--is_mosaic=True')
+    
+    
+    decensors = ['decensor.py', 'decensor.exe', 'decensor2.exe']
+    decensor_log = os.path.join(workdir, 'decensor.log')
+    if os.path.exists(decensor_log):
+        with open(decensor_log, 'r', encoding='utf-8') as log:
+            decensors.insert(0, log.read())
+    for decensor in decensors:
+        try:
+            if os.path.exists(os.path.join(workdir, decensor)):
+                output = subprocess.check_output('%s %s' % (decensor, ' '.join(args)), shell=True, cwd=workdir)
+                print('output %s' % output)
+                with open(decensor_log, 'w', encoding='utf-8') as log:
+                    log.write(decensor)
+                break
+        except:
+            pass
+    else:
+        input('===== 錯誤 =====\n無法匯入 tensorflow\n請安裝python版\nhttps://github.com/mao-shonen/DeepCreamPy-UI')
+        sys.exit(1)
 
     if os.path.exists(os.path.join(path_output, 'tmp.png')):
         output_image = Image(os.path.join(path_output, 'tmp.png'))
@@ -219,7 +235,7 @@ def output(mode):
                 read()
             elif key in [69, 101]: # 69=E 101=e
                 mouse_enabled = True
-                cv2.imshow('image', image.last)
+                image.show()
                 print(TIP)
                 break
             elif key in [83, 115]: #83=S 115=s

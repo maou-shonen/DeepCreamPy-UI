@@ -1,3 +1,1 @@
-@echo off
-pyinstaller -F .\ui_opencv.py
-pause
+@pyinstaller -F .\ui_opencv.py
